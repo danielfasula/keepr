@@ -7,7 +7,24 @@ class KeepsService {
     try {
       const res = await api.get('api/keeps')
       AppState.keeps = res.data
-      logger.log(res.data)
+    } catch (error) {
+      logger.log(error)
+    }
+  }
+
+  async getKeep(id) {
+    try {
+      const res = await api.get('api/keeps/' + id)
+      AppState.activeKeep = res.data
+    } catch (error) {
+      logger.log(error)
+    }
+  }
+
+  async createKeep(keepData) {
+    try {
+      const res = await api.post('api/keeps', keepData)
+      AppState.keeps.push(res.data)
     } catch (error) {
       logger.log(error)
     }

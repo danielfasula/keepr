@@ -1,6 +1,25 @@
 <template>
-  <div class="card-columns mt-5">
-    <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
+  <div class="container-fluid">
+    <div v-if="state.user.isAuthenticated" class="row">
+      <div class="col">
+        <button
+          class="btn btn-warning"
+          type="button"
+          id="hover-button"
+          data-toggle="modal"
+          data-target="#addKeep"
+          aria-hidden="true"
+        >
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <AddKeepModal />
+    <div class="row">
+      <div class="card-columns mt-5">
+        <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +31,7 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
+      user: computed(() => AppState.user),
       keeps: computed(() => AppState.keeps)
     })
     onMounted(async () => {

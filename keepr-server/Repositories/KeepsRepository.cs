@@ -36,6 +36,9 @@ namespace keepr_server.Repositories
         internal Keep GetById(int id)
         {
             string sql = @"
+            UPDATE keeps k
+            SET k.views = k.views + 1
+            WHERE k.id = @id;
             SELECT
             k.*,
             p.*

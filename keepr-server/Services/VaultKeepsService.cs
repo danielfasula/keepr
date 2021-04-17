@@ -31,7 +31,7 @@ namespace keepr_server.Services
             {
                 throw new Exception("Invalid User");
             }
-            _vkrepo.Delete(id);
+            _vkrepo.Delete(id, vk.KeepId);
         }
     }
 }
