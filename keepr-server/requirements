@@ -5,8 +5,10 @@
 [x] All users have a public profile page
 [x] The profile page adheres to mock
 [x] Each vault has its own route where users can view all of the keeps in the vault
-[] On the vault page, if the vault is private and not the active users the request fails
-[] From the vault page if the user is the creator they can remove keeps from the vault
+[x] On the vault page, if the vault is private and not the active users the request fails
+NOTE request fails, but I need to make it so that the user can see that
+[x] From the vault page if the user is the creator they can remove keeps from the vault
+NOTE have to make it so a user who is NOT the creator of the vault cannot remove keeps
 [x] Anytime a keep is kept in a vault the keep count is incremented
 [x] Users can Register, login and automatically authenticated on refresh
 [x] Create and Delete Keeps
@@ -14,7 +16,7 @@
 [x] Users can only Delete things they created
 [x] All deletes require confirmation
 [x] Add keeps to vaults
-[] Remove keeps from vaults
+[x] Remove keeps from vaults
 [x] All Valid Auth API Tests pass
 [x] All No Auth API Tests pass
 [x] All Invalid Auth API Tests pass
@@ -24,7 +26,7 @@ STRETCH GOALS
 [] Keeps should be tagged, allowing users find keeps by tag
 [] Users can create custom tags
 [] Tags are not duplicated (Games,games,GAMES)
-[] Stretch Goal API tests pass
+[x] Stretch Goal API tests pass
 [] Implement pagination or infinite scroll
 [] Users can extend their profile to include a bio, hobbies, ect...
 [] Users can share to other popular social media

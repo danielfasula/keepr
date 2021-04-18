@@ -1,6 +1,6 @@
 <template>
-  <div class="vault-details-page container-fluid">
-    <div class="row d-flex justify-content-center" v-if="state.vault.creator">
+  <div class="vault-details-page container-fluid" v-if="state.vault.creator">
+    <div class="row d-flex justify-content-center">
       <i class="fas fa-spinner fa-spin" v-if="state.loading"></i>
       <div
         v-else
@@ -9,7 +9,7 @@
         <h1>
           {{ state.vault.name }}
         </h1>
-        <div v-if="state.vault.creator.email == state.user.email">
+        <div v-if="state.user.email == state.vault.creator.email">
           <i
             type="button"
             class="fa fa-trash text-danger"
@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <div class="col-12 d-flex mt-5">
         <h4>Keeps: {{ state.keeps.length }}</h4>
@@ -48,7 +47,8 @@ export default {
       loading: true,
       user: computed(() => AppState.user),
       vault: computed(() => AppState.activeVault),
-      keeps: computed(() => AppState.vaultKeeps)
+      keeps: computed(() => AppState.vaultKeeps),
+      error: computed(() => AppState.error)
     })
     onMounted(async () => {
       await vaultsService.getVault(route.params.id)
@@ -72,7 +72,7 @@ export default {
           confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
           if (result.isConfirmed) {
-            await vaultsService.deleteVault(state.vault.id)
+            vaultsService.deleteVault(state.vault.id)
             router.back()
             Swal.fire(
               'Deleted!',
