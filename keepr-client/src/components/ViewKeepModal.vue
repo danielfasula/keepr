@@ -75,7 +75,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div
+                    class="col-2"
+                    v-if="keep.creator.email == state.user.email"
+                  >
                     <button
                       type="button"
                       class="btn btn-danger"
