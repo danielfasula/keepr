@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div id="userVaults">
+          <div id="profileVaults">
             <div class="row">
               <div class="col-12 d-flex mt-5">
                 <h4>Vaults</h4>
@@ -46,6 +46,32 @@
                   :key="vault.id"
                   :vault="vault"
                 />
+              </div>
+            </div>
+          </div>
+
+          <div id="profileKeeps">
+            <div class="row">
+              <div class="col-12 d-flex mt-5">
+                <h4>Keeps</h4>
+                <div v-if="state.profile.email == state.user.email">
+                  <button
+                    class="btn"
+                    type="button"
+                    id="hover-button"
+                    data-toggle="modal"
+                    data-target="#addKeep"
+                    aria-hidden="true"
+                  >
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                  </button>
+                  <AddKeepModal />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="card-columns mt-2">
+                <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
               </div>
             </div>
           </div>

@@ -27,7 +27,7 @@
     </div>
     <div class="row">
       <div class="card-columns mt-5">
-        <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
+        <VaultKeep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
       </div>
     </div>
   </div>
@@ -70,9 +70,9 @@ export default {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            vaultsService.deleteVault(state.vault.id)
+            await vaultsService.deleteVault(state.vault.id)
             router.back()
             Swal.fire(
               'Deleted!',

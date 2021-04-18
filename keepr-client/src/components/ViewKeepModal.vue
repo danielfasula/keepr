@@ -106,6 +106,10 @@
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { vaultKeepsService } from '../services/VaultKeepsService'
+import { keepsService } from '../services/KeepsService'
+import $ from 'jquery'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'ViewKeepModal',
   props: {
@@ -124,6 +128,27 @@ export default {
         state.newVK.keepId = props.keep.id
         await vaultKeepsService.create(state.newVK)
         state.newVK = {}
+      },
+      deleteKeep() {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            await keepsService.deleteKeep(props.keep)
+            $('#view-keep-' + props.keep.id).modal('hide')
+            Swal.fire(
+              'Deleted!',
+              'Your keep has been deleted.',
+              'success'
+            )
+          }
+        })
       }
     }
   },

@@ -10,6 +10,14 @@ class VaultKeepsService {
       logger.log(error)
     }
   }
+
+  async removeKeepFromVault(vaultKeepId) {
+    try {
+      await api.delete('api/vaultkeeps/' + vaultKeepId)
+    } catch (error) {
+      logger.log(error)
+    }
+  }
 }
 
 export const vaultKeepsService = new VaultKeepsService()

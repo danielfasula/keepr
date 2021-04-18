@@ -1,5 +1,6 @@
 USE cwfinal;
 
+
 -- CREATE TABLE profiles
 -- (
 --     id VARCHAR(255) NOT NULL,
