@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div class="row justify-content-between">
-                  <div class="col-4">
+                  <div class="col-3">
                     <div class="btn-group dropup">
                       <button
                         type="button"
@@ -76,7 +76,7 @@
                     </div>
                   </div>
                   <div
-                    class="col-2"
+                    class="col-1"
                     v-if="keep.creator.email == state.user.email"
                   >
                     <button
@@ -87,7 +87,7 @@
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </div>
-                  <div class="col-4 d-flex">
+                  <div class="col-6 d-flex">
                     <img
                       class="profile-picture"
                       :src="keep.creator.picture"

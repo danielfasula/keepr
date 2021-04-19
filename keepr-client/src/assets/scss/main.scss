@@ -23,18 +23,39 @@ main {
   align-items: stretch;
 }
 
+.stop {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.box {
+  border-radius: 15px;
+}
+
 @media (max-width: 767px) {
-  .card-columns {
-    column-count: 2;
-    margin-right: 10px;
-    margin-left: 10px;
+  .masonry-columns {
+    columns: 2;
+    justify-content: center;
+
+    .box {
+      width: 100px;
+      margin: 0;
+      display: inline-block;
+      width: 100%;
+    }
   }
 }
 
 @media (min-width: 767.98px) {
-  .card-columns {
-    column-count: 4;
-    margin-right: 30px;
-    margin-left: 30px;
+  .masonry-columns {
+    columns: 4;
+    justify-content: center;
+
+    .box {
+      width: 100px;
+      margin: 0;
+      display: inline-block;
+      width: 100%;
+    }
   }
 }

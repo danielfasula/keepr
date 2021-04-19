@@ -25,6 +25,7 @@ class KeepsService {
     try {
       const res = await api.post('api/keeps', keepData)
       AppState.keeps.push(res.data)
+      return keepData
     } catch (error) {
       logger.log(error)
     }
@@ -33,11 +34,10 @@ class KeepsService {
   // NOTE figure out how to splice out of appstate.keeps array
   async deleteKeep(keep) {
     try {
-      // const keepIndex = AppState.keeps.indexOf(keep)
-      // debugger
-      // logger.log(keepIndex)
+      const keepIndex = AppState.keeps.findIndex(k => k.id === keep.id)
+      logger.log(keepIndex)
       await api.delete('api/keeps/' + keep.id)
-      // AppState.keeps.splice(index, 1)
+      AppState.keeps.splice(keepIndex, 1)
     } catch (error) {
       logger.log(error)
     }

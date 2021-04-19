@@ -77,10 +77,12 @@ import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { keepsService } from '../services/KeepsService'
 import $ from 'jquery'
+// import { useRoute } from 'vue-router'
 export default {
   name: 'AddKeepModal',
   props: [],
   setup() {
+    // const route = useRoute()
     const state = reactive({
       user: computed(() => AppState.user),
       newKeep: {}
@@ -89,10 +91,11 @@ export default {
       state,
       async createKeep() {
         try {
-          // const keepId =
           await keepsService.createKeep(state.newKeep)
           $('#addKeep').modal('hide')
-          // $('#view-keep-' + keepId).modal('')
+          // if (route.name === 'account') {
+          //   AppState.userKeeps.push(res.data)
+          // }
           state.newKeep = {}
         } catch (error) {
           logger.log(error)

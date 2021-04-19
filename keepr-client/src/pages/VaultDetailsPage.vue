@@ -24,8 +24,8 @@
         <h4>Keeps: {{ state.keeps.length }}</h4>
       </div>
     </div>
-    <div class="row">
-      <div class="card-columns mt-5">
+    <div class="row stop">
+      <div class="masonry-columns mt-5">
         <VaultKeep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
       </div>
     </div>

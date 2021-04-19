@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="card-columns mt-2">
+            <div class="masonry-columns vaults mt-2">
               <Vault
                 v-for="vault in state.vaults"
                 :key="vault.id"
@@ -66,8 +66,8 @@
               <AddKeepModal />
             </div>
           </div>
-          <div class="row">
-            <div class="card-columns mt-2">
+          <div class="row stop">
+            <div class="masonry-columns mt-2">
               <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
             </div>
           </div>

@@ -1,10 +1,12 @@
 <template>
-  <div class="card p-3">
+  <div class="card p-3" v-if="state.vault.creator">
     <img class="card-img" :src="keep.img" />
     <div class="card-img-overlay d-flex">
       <div class="row">
         <div class="col-12">
+          <!-- NOTE fix this populate on server -->
           <i
+            v-if="state.vault.creator.email == state.user.email"
             type="button"
             class="fas fa-minus-circle"
             @click="removeFromVault"
@@ -39,6 +41,8 @@ import { accountService } from '../services/AccountService'
 import { keepsService } from '../services/KeepsService'
 import { vaultKeepsService } from '../services/VaultKeepsService'
 import Swal from 'sweetalert2'
+import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 
 export default {
   name: 'VaultKeep',
@@ -46,7 +50,12 @@ export default {
     keep: { type: Object, required: true }
   },
   setup(props) {
+    const state = reactive({
+      user: computed(() => AppState.user),
+      vault: computed(() => AppState.activeVault)
+    })
     return {
+      state,
       async getKeep() {
         await keepsService.getKeep(props.keep.id)
         await accountService.getVaults()
@@ -78,10 +87,6 @@ export default {
 </script>
 
 <style scoped>
-.card-img-overlay {
-  padding: 0rem !important;
-}
-
 #hover:hover {
   cursor: pointer;
 }
