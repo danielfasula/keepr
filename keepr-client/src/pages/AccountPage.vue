@@ -38,8 +38,8 @@
               <AddVaultModal />
             </div>
           </div>
-          <div class="row">
-            <div class="masonry-columns vaults mt-2">
+          <div class="row stop">
+            <div class="masonry-columns mt-2">
               <Vault
                 v-for="vault in state.vaults"
                 :key="vault.id"

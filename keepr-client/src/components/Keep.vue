@@ -20,6 +20,7 @@
       </div>
     </div>
     <ViewKeepModal :keep="keep" />
+    <AddToNewVaultModal :keep="keep" />
   </div>
 </template>
 
@@ -46,13 +47,5 @@ export default {
 <style scoped>
 #hover:hover {
   cursor: pointer;
-}
-
-.name-profile {
-  transform: translateY(-30px);
-}
-
-img {
-  border-radius: 15px;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
-  <div class="box border p-0">
-    <router-link :to="{ name: 'VaultDetailsPage', params: { id: vault.id } }">
-      <h3 class="text-dark">
-        {{ vault.name }}
-      </h3>
-    </router-link>
+  <div class="card p-0 my-2">
+    <div class="card-body text-center">
+      <router-link :to="{ name: 'VaultDetailsPage', params: { id: vault.id } }">
+        <h3 class="text-dark">
+          {{ vault.name }}
+        </h3>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -27,11 +29,7 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
+.card {
+  border-radius: 15px;
 }
 </style>

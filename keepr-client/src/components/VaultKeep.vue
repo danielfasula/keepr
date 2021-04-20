@@ -1,38 +1,31 @@
 <template>
-  <div class="card p-3" v-if="state.vault.creator">
-    <img class="card-img" :src="keep.img" />
-    <div class="card-img-overlay d-flex">
-      <div class="row">
-        <div class="col-12">
-          <!-- NOTE fix this populate on server -->
-          <i
-            v-if="state.vault.creator.email == state.user.email"
-            type="button"
-            class="fas fa-minus-circle"
-            @click="removeFromVault"
-          ></i>
-        </div>
-      </div>
-      <div class="row align-items-end">
-        <div class="col-12 d-flex">
-          <h5
-            data-toggle="modal"
-            :data-target="'#view-keep-' + keep.id"
-            id="hover"
-            aria-hidden="true"
-            @click="getKeep"
-          >
-            {{ keep.name }}
-          </h5>
-          <ViewKeepModal :keep="keep" />
-          <router-link
-            :to="{ name: 'ProfilePage', params: { id: keep.creatorId } }"
-          >
-            <i class="fas fa-user-alt"></i>
-          </router-link>
-        </div>
+  <div class="box p-0" v-if="state.vault.creator">
+    <img class="img-fluid" :src="keep.img" />
+    <div class="row">
+      <div class="col-12 d-flex justify-content-around name-profile">
+        <h5
+          data-toggle="modal"
+          :data-target="'#view-keep-' + keep.id"
+          id="hover"
+          aria-hidden="true"
+          @click="getKeep"
+        >
+          {{ keep.name }}
+        </h5>
+        <i
+          v-if="state.vault.creator.email == state.user.email"
+          type="button"
+          class="fas fa-minus-circle text-danger mt-1"
+          @click="removeFromVault"
+        ></i>
+        <router-link
+          :to="{ name: 'ProfilePage', params: { id: keep.creatorId } }"
+        >
+          <i class="fas fa-user-alt"></i>
+        </router-link>
       </div>
     </div>
+    <ViewKeepModal :keep="keep" />
   </div>
 </template>
 

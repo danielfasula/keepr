@@ -38,9 +38,14 @@ class KeepsService {
       logger.log(keepIndex)
       await api.delete('api/keeps/' + keep.id)
       AppState.keeps.splice(keepIndex, 1)
+      AppState.userKeeps.splice(keepIndex, 1)
     } catch (error) {
       logger.log(error)
     }
+  }
+
+  clearAK() {
+    AppState.activeKeep = {}
   }
 }
 

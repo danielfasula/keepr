@@ -10,22 +10,24 @@
     >
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-6">
-                <img class="keep-img img-fluid" :src="keep.img" />
+              <div class="col-6 left-side d-flex">
+                <img class="img-fluid keep-img" :src="keep.img" />
               </div>
               <div class="col-6 my-2 container-fluid">
+                <div class="row">
+                  <div class="col move">
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col d-flex justify-content-center">
                     <div class="mx-2">
@@ -44,7 +46,7 @@
                     <h4>{{ keep.name }}</h4>
                   </div>
                 </div>
-                <div class="row justify-content-center mt-2">
+                <div class="row justify-content-center mt-2 description">
                   <div class="col-10">
                     <h6>{{ keep.description }}</h6>
                   </div>
@@ -59,19 +61,20 @@
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        Add To Vault
+                        Save
                       </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"> Create A Vault </a>
-                        <a
+                      <div class="dropdown-menu scroll">
+                        <p class="dropdown-item" @click="addToNewVault">
+                          Create A Vault
+                        </p>
+                        <p
                           class="dropdown-item"
-                          href="#"
                           v-for="vault in state.vaults"
                           :key="vault.id"
-                          @click="addToVault(vault.id)"
+                          @click="addToVault(vault)"
                         >
                           {{ vault.name }}
-                        </a>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -81,19 +84,34 @@
                   >
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      class="btn btn-danger mt-1"
                       @click="deleteKeep"
                     >
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </div>
-                  <div class="col-6 d-flex">
-                    <img
-                      class="profile-picture"
-                      :src="keep.creator.picture"
-                      alt=""
-                    />
-                    <p>{{ keep.creator.name }}</p>
+                  <div class="col-6">
+                    <router-link
+                      :to="{
+                        name: 'ProfilePage',
+                        params: { id: keep.creatorId },
+                      }"
+                      class="d-flex justify-content-center text-dark"
+                      @click="closeModal"
+                    >
+                      <img
+                        class="profile-picture"
+                        :src="keep.creator.picture"
+                        alt=""
+                      />
+                      <p class="mt-2 ml-2">
+                        {{
+                          keep.creator.name.includes("@")
+                            ? keep.creator.name.split("@")[0]
+                            : keep.creator.name
+                        }}
+                      </p>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -112,6 +130,7 @@ import { vaultKeepsService } from '../services/VaultKeepsService'
 import { keepsService } from '../services/KeepsService'
 import $ from 'jquery'
 import Swal from 'sweetalert2'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'ViewKeepModal',
@@ -119,17 +138,36 @@ export default {
     keep: { type: Object, required: true }
   },
   setup(props) {
+    const router = useRouter()
     const state = reactive({
       user: computed(() => AppState.user),
       vaults: computed(() => AppState.userVaults),
+      activeKeep: computed(() => AppState.activeKeep),
       newVK: {}
     })
     return {
       state,
-      async addToVault(vaultId) {
-        state.newVK.vaultID = vaultId
+      closeModal() {
+        $('#view-keep-' + props.keep.id).modal('hide')
+        keepsService.clearAK()
+      },
+      async addToVault(vault) {
+        state.newVK.vaultID = vault.id
         state.newVK.keepId = props.keep.id
         await vaultKeepsService.create(state.newVK)
+        Swal.fire({
+          title: 'Keep added to ' + vault.name + '!',
+          icon: 'success',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Take Me To ' + vault.name + '',
+          cancelButtonText: 'Stay on Keep'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#view-keep-' + props.keep.id).modal('hide')
+            router.push({ name: 'VaultDetailsPage', params: { id: vault.id } })
+          }
+        })
         state.newVK = {}
       },
       deleteKeep() {
@@ -152,6 +190,10 @@ export default {
             )
           }
         })
+      },
+      addToNewVault() {
+        $('#view-keep-' + props.keep.id).modal('hide')
+        $('#addToNewVault').modal('show')
       }
     }
   },
@@ -160,7 +202,38 @@ export default {
 </script>
 
 <style scoped>
+.left-side {
+  height: 100%;
+}
+
+.keep-img {
+  align-content: center;
+}
+
+.scroll {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+@media (min-width: 991.5px) {
+  .description {
+    min-height: 60%;
+  }
+}
+
+@media (max-width: 991px) {
+  .description {
+    min-height: 30%;
+  }
+}
+
 .profile-picture {
-  max-height: 50px;
+  max-height: 45px;
+}
+
+.move {
+  padding-right: 10px !important;
+  margin-top: -15px !important;
+  margin-bottom: 10px;
 }
 </style>
