@@ -10,11 +10,11 @@
             <img class="rounded" :src="state.account.picture" alt="" />
             <div class="ml-4">
               <h2>
-                {{
-                  state.account.name.includes("@")
-                    ? state.account.name.split("@")[0]
-                    : state.account.name
-                }}
+                {{ name(state.account.name) }}
+                <!-- state.account.name.includes("@")
+                    ? state.account.name.split("@")[0].charAt(0).toUpperCase() +
+                      state.account.name.split("@")[0].slice(1)
+                    : state.account.name -->
               </h2>
               <h5>Vaults: {{ state.vaults.length }}</h5>
               <h5>Keeps: {{ state.keeps.length }}</h5>
@@ -28,7 +28,6 @@
               <button
                 class="btn"
                 type="button"
-                id="hover-button"
                 data-toggle="modal"
                 data-target="#addVault"
                 aria-hidden="true"
@@ -56,7 +55,6 @@
               <button
                 class="btn"
                 type="button"
-                id="hover-button"
                 data-toggle="modal"
                 data-target="#addKeep"
                 aria-hidden="true"
@@ -94,7 +92,13 @@ export default {
       await accountService.getKeeps()
     })
     return {
-      state
+      state,
+      name(n) {
+        return n.includes('@')
+          ? n.split('@')[0].charAt(0).toUpperCase() +
+          n.split('@')[0].slice(1)
+          : n
+      }
     }
   }
 }
@@ -103,5 +107,8 @@ export default {
 <style scoped >
 img {
   max-width: 100px;
+}
+.btn {
+  margin-top: -5px;
 }
 </style>

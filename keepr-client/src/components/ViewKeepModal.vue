@@ -1,5 +1,5 @@
 <template>
-  <div class="view-keep-modal container-fluid" v-if="keep.creator">
+  <div class="view-keep-modal" v-if="keep.creator">
     <div
       class="modal fade"
       :id="'view-keep-' + keep.id"
@@ -51,12 +51,12 @@
                     <h6>{{ keep.description }}</h6>
                   </div>
                 </div>
-                <div class="row justify-content-between">
+                <div class="row align-items-center justify-content-between">
                   <div class="col-3">
                     <div class="btn-group dropup">
                       <button
                         type="button"
-                        class="btn btn-primary dropdown-toggle"
+                        class="btn ddt dropdown-toggle"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
@@ -104,12 +104,8 @@
                         :src="keep.creator.picture"
                         alt=""
                       />
-                      <p class="mt-2 ml-2">
-                        {{
-                          keep.creator.name.includes("@")
-                            ? keep.creator.name.split("@")[0]
-                            : keep.creator.name
-                        }}
+                      <p class="mt-2 ml-2 text-capitalize">
+                        {{ name(keep.creator.name) }}
                       </p>
                     </router-link>
                   </div>
@@ -194,6 +190,9 @@ export default {
       addToNewVault() {
         $('#view-keep-' + props.keep.id).modal('hide')
         $('#addToNewVault').modal('show')
+      },
+      name(n) {
+        return n.includes('@') ? n.split('@')[0] : n
       }
     }
   },
@@ -202,6 +201,24 @@ export default {
 </script>
 
 <style scoped>
+.ddt {
+  background-color: #55efc4;
+}
+.description::-webkit-scrollbar,
+.scroll::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.description::-webkit-scrollbar-track,
+.scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.description::-webkit-scrollbar-thumb,
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #55efc4;
+  border-radius: 10px;
+}
 .left-side {
   height: 100%;
 }
@@ -217,13 +234,17 @@ export default {
 
 @media (min-width: 991.5px) {
   .description {
-    min-height: 60%;
+    min-height: 58%;
+    max-height: 58%;
+    overflow-y: auto;
   }
 }
 
 @media (max-width: 991px) {
   .description {
     min-height: 30%;
+    max-height: 31%;
+    overflow-y: auto;
   }
 }
 

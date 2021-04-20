@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
     <div v-if="state.user.isAuthenticated" class="row">
-      <div class="col">
+      <div class="col text-right mt-4 mr-5">
         <button
-          class="btn btn-warning"
+          class="btn btn-secondary"
           type="button"
           id="hover-button"
           data-toggle="modal"

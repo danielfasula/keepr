@@ -7,12 +7,8 @@
             <div class="col d-flex">
               <img class="rounded" :src="state.profile.picture" alt="" />
               <div class="ml-4">
-                <h2>
-                  {{
-                    state.profile.name.includes("@")
-                      ? state.profile.name.split("@")[0]
-                      : state.profile.name
-                  }}
+                <h2 class="text-capitalize">
+                  {{ name(state.profile.name) }}
                 </h2>
                 <h5>Vaults: {{ state.vaults.length }}</h5>
                 <h5>Keeps: {{ state.keeps.length }}</h5>
@@ -107,7 +103,12 @@ export default {
       next()
     })
     return {
-      state
+      state,
+      name(n) {
+        return n.includes('@')
+          ? n.split('@')[0]
+          : n
+      }
     }
   },
   components: {}
