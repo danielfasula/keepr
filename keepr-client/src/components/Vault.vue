@@ -31,5 +31,7 @@ export default {
 <style scoped>
 .card {
   border-radius: 15px;
+  border-color: #55efc4;
+  border-width: 5px;
 }
 </style>
